@@ -30,7 +30,7 @@ usersRouter.post('/login', function (req, res, next) {
                 res.redirect('/');
 
             // login failed (wrong password)
-            res.render('login', {failed:true});
+            //res.render('login', {failed:true});
         }
     }
 
