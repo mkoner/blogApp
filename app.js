@@ -1,11 +1,16 @@
 const express = require('express');
 const app = express();
+var ejs = require("ejs");
 const usersRouter = require('./routes/usersRoutes');
 const postsRouter = require('./routes/postsRoutes');
 const mongoose = require('mongoose');
 
 const port = 80;
 
+
+//EJS Engine
+app.set('view engine', 'html');
+app.engine('html', ejs.renderFile);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
