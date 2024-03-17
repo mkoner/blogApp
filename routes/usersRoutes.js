@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
+const bcrypt = require('bcrypt');
 
-const { error } = require('console');
 const options = {
 "caseSensitive": false,
 "strict": false
@@ -9,18 +9,32 @@ const options = {
 
 const usersRouter = express.Router(options);
 
+const User = require("../models/User");
 
 
 // USER STORAGE
-let users = [{email: 's@d', password: 's'}];
+//let users = [{email: 's@d', password: 's'}];
+
+// for bCrypt
+const saltRounds = 7;
 
 // LOGIN
 usersRouter.get('/login', function (req, res, next) {
     res.render('login',{failed:false});
 });
 
-usersRouter.post('/login', function (req, res, next) {
+usersRouter.post('/login', async function (req, res, next) {
     // #erneute formularbestätigung
+    const {email, password} = req.body;
+    const user = await User.findOne({email});
+    if(user && bcrypt.compareSync(password, user.password)){
+        res.redirect('/');
+    }
+    else{
+        res.render('login', {failed:true});
+    }
+    
+    /*
     let user = { email: req.body.email, password: req.body.password }
 
     for (ele of users){
@@ -36,6 +50,8 @@ usersRouter.post('/login', function (req, res, next) {
 
     // login failed (no user registered with email)
     res.render('login', {failed:true});
+    */
+
 });
 
 
@@ -44,9 +60,37 @@ usersRouter.get('/registration', function (req, res, next) {
     res.render('registration',{emailUsed:false});
 });
 
-usersRouter.post('/registration', function (req, res, next) {
+usersRouter.post('/registration', async function (req, res, next) {
     // #erneute formularbestätigung
-    let user = { email: req.body.email, password: req.body.password, username: req.body.username }
+    const {username, email, password} = req.body;
+    // Encrypt user password
+    const hash = bcrypt.hashSync(password, saltRounds);
+    const newUser = new User({
+        username,
+        email,
+        password: hash,
+    });
+    let emailUsed = false;
+
+    try {
+        await newUser.save();
+        console.log("User created successfully!");
+    } catch (error) {
+        console.error("Error creating user:", error.message);
+        emailUsed = true;
+        
+    }
+    
+    // #redirect to registration page if error otherwise home page
+    if(emailUsed)
+      res.render('registration', {emailUsed:true});
+    else
+      res.redirect('/');
+
+    // show all users 
+    //console.log(users);
+
+        /*const user = { email: req.body.email, password: req.body.password, username: req.body.username }
 
     for (ele of users){
         if(user.email == ele.email){
@@ -57,11 +101,7 @@ usersRouter.post('/registration', function (req, res, next) {
     }
 
     users.push(user);
-    // #redirect
-    res.redirect('/');
-
-    // show all users 
-    console.log(users);
+    */
 });
 
 
