@@ -41,7 +41,7 @@ mongoose.connect(uri).then(success => {
 });
 
 /*
-const User = require("./models/User");
+const User = require("./models/user");
 
 async function createUser() {
     const newUser = new User({
