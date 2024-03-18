@@ -9,7 +9,7 @@ const options = {
 
 const usersRouter = express.Router(options);
 
-const User = require("../models/User");
+const User = require("../models/user");
 
 
 // USER STORAGE
