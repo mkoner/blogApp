@@ -9,7 +9,7 @@ const options = {
 
 const usersRouter = express.Router(options);
 
-const User = require("../models/user");
+const User = require("../models/User");
 
 
 // USER STORAGE
@@ -17,6 +17,16 @@ const User = require("../models/user");
 
 // for bCrypt
 const saltRounds = 7;
+
+// MAIN PAGE
+usersRouter.get('/', function(req,res,next){
+
+    // ## implement for all other pages
+    res.render('main',{loggedIn: req.cookies.login});
+    
+
+})
+
 
 // LOGIN
 usersRouter.get('/login', function (req, res, next) {
