@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/main.css">
+    
+</head>
+
+<body>
+    <form action="posts" method="get">
+        <input type="text" name="searchQuery" placeholder="">
+        <button>Search</button>
+    </form>
+    <section class="posts-container">   
+        <% for( let post of posts) { %>
+            <%- include('components/postCard.html', {post: post}) %>  
+        <% } %>
+    </section>
+</body>
+</html>

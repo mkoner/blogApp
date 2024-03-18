@@ -1,0 +1,15 @@
+
+
+.noDisplay {
+    display: none;
+}
+
+.post-card{
+    
+}
+
+.post-card .bg-img-container{
+    width: 250px;
+    height: 150px;
+    background-size: cover;
+}

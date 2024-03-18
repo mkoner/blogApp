@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
-var ejs = require("ejs");
+const ejs = require("ejs");
+const path = require('path');
 const usersRouter = require('./routes/usersRoutes');
 const postsRouter = require('./routes/postsRoutes');
 const mongoose = require('mongoose');
@@ -17,7 +18,8 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(usersRouter);
 app.use(postsRouter);
-//console.log(dbClient);
+app.use('/css', express.static(path.join(__dirname, 'views', 'css')));
+app.use('/uploads', express.static(path.join(__dirname, 'views', 'uploads')));
 
 const newPost = {
     title: 'My new blog post',
