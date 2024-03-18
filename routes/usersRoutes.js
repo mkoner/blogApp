@@ -29,6 +29,8 @@ usersRouter.post('/login', async function (req, res, next) {
     const user = await User.findOne({email});
     if(user && bcrypt.compareSync(password, user.password)){
         res.redirect('/');
+         //## same for register
+        res.cookie('login',user._id);
     }
     else{
         res.render('login', {failed:true});
@@ -75,6 +77,8 @@ usersRouter.post('/registration', async function (req, res, next) {
     try {
         await newUser.save();
         console.log("User created successfully!");
+        //## 
+        res.cookie('login',user._id);
     } catch (error) {
         console.error("Error creating user:", error.message);
         emailUsed = true;
