@@ -9,14 +9,28 @@
 </head>
 
 <body>
-    <form action="posts" method="get">
-        <input type="text" name="searchQuery" placeholder="">
-        <button>Search</button>
-    </form>
-    <section class="posts-container">   
-        <% for( let post of posts) { %>
-            <%- include('components/postCard.html', {post: post}) %>  
-        <% } %>
-    </section>
+    <% if (failed) { %>
+        <div>
+            Something went wrong!
+        </div>
+    <% }  else {%>
+        <div>
+            <form action="posts" method="get">
+                <input type="text" name="searchQuery" placeholder="">
+                <button>Search</button>
+            </form>
+            <% if (posts.length == 0) { %>
+             <div>
+                No post found
+             </div>
+            <% } else {%>
+                <section class="posts-container">   
+                    <% for( let post of posts) { %>
+                        <%- include('components/postCard.html', {post: post}) %>  
+                    <% } %>
+                </section>
+            <% } %>
+        </div>
+    <% } %>
 </body>
 </html>

@@ -5,7 +5,6 @@ const postsRouter = express.Router();
 const multer = require('multer');
 
 const Post = require("../models/post");
-const { appendFile } = require('fs');
 
 // Specify the folder where to upload files and filename
 const storage = multer.diskStorage({
@@ -38,7 +37,7 @@ postsRouter.get('/posts/new', (req, res, next) =>{
 postsRouter.post('/posts/new', upload.single('file'), async (req, res, next) =>{
     //console.log("file: ", req.file)
     const imageUrl = req.file.filename;
-    const ownerId = '65f75e82f733b09b5c51d803'
+    const ownerId = '65f898cc9789ff14307ce254'
     const newPost = new Post({
         imageUrl, 
         ownerId, 
@@ -52,12 +51,11 @@ postsRouter.post('/posts/new', upload.single('file'), async (req, res, next) =>{
     } catch (error) {
         console.error("Error creating post:", error.message);
         isError = true;
-        res.send("errooor")
     }
     if(isError){
         res.render('createPost', {failed: true})
     } else
-      res.redirect('/');
+      res.redirect('/posts');
 });
 
 
@@ -65,19 +63,36 @@ postsRouter.post('/posts/new', upload.single('file'), async (req, res, next) =>{
 postsRouter.get('/posts', async(req, res, next) =>{
     //console.log(req.query);
     try {
-        // To do later filter by title or by content contains
-        const { title, content} = req.query;
-        const query = {title: req.query.searchQuery.trim()};
-
-        if (title) query.title = title.trim();
-        if (content) query.content = content.trim();
-
+        // To do later filter by title or by content contains: done
+        const key = req.query.searchQuery;;
+        let query = {};
+        if (key){
+          query = {
+            "$or": [{
+              "title": { '$regex': '.*' + key + '.*', $options: 'i' }
+          }, {
+              "content": { '$regex': '.*' + key + '.*', $options: 'i' }
+          }]
+          }
+        }
+        
         const posts = await Post.find(query);
         //console.log(posts)
-        res.render('posts', {posts: posts});
+        res.render('posts', {posts: posts, failed: false});
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        //res.status(500).json({ error: error.message });
+        res.render('posts', {failed: true})
     }
+});
+
+// Get a specific post page
+postsRouter.get('/post/:id', async (req, res, next) =>{
+  //console.log("get single post")
+  const {id} = req.params;
+  //console.log(id);
+  const post = await Post.findById(id);
+  //console.log(post)
+  res.render('postPage', {post: post});
 });
 
 

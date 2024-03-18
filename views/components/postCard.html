@@ -1,11 +1,13 @@
 
-<article class="post-card">
-    <div class="bg-img-container" style="background-image: url('<%= `/uploads/${post.imageUrl}` %>');">
-
-    </div>
-    <p>
-        <strong>
-            <%= post.title  %>
-        </strong>
-    </p>
-</article>
+<a href=" <%= `post/${post._id}` %> ">
+    <article class="post-card">
+        <div class="bg-img-container" style="background-image: url('<%= `/uploads/${post.imageUrl}` %>');">
+    
+        </div>
+        <p>
+            <strong>
+                <%= post.title  %>
+            </strong>
+        </p>
+    </article>
+</a>
