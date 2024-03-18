@@ -31,31 +31,35 @@ const storage = multer.diskStorage({
  });
 
 postsRouter.get('/posts/new', (req, res, next) =>{
-    res.render('createPost', {failed: false});
+    const isLoggedIn = req.cookies.login;
+    if(isLoggedIn)
+      res.render('createPost', {failed: false, loggedIn: req.cookies.login});
+    else
+      res.render('login',{failed:false, loggedIn: req.cookies.login});
 });
 
 postsRouter.post('/posts/new', upload.single('file'), async (req, res, next) =>{
     //console.log("file: ", req.file)
-    const imageUrl = req.file.filename;
-    const ownerId = '65f898cc9789ff14307ce254'
-    const newPost = new Post({
-        imageUrl, 
-        ownerId, 
-        title: req.body.title, 
-        content: req.body.content, 
-        postedDate: new Date()});
-        let isError = false;
-    try {
-        await newPost.save();
-        console.log("Post created successfully!");
-    } catch (error) {
-        console.error("Error creating post:", error.message);
-        isError = true;
-    }
-    if(isError){
-        res.render('createPost', {failed: true})
-    } else
-      res.redirect('/posts');
+      const imageUrl = req.file.filename;
+      const ownerId = '65f898cc9789ff14307ce254'
+      const newPost = new Post({
+          imageUrl, 
+          ownerId, 
+          title: req.body.title, 
+          content: req.body.content, 
+          postedDate: new Date()});
+          let isError = false;
+      try {
+          await newPost.save();
+          console.log("Post created successfully!");
+      } catch (error) {
+          console.error("Error creating post:", error.message);
+          isError = true;
+      }
+      if(isError){
+          res.render('createPost', {failed: true, loggedIn: req.cookies.login})
+      } else
+        res.redirect('/posts');
 });
 
 
@@ -78,10 +82,10 @@ postsRouter.get('/posts', async(req, res, next) =>{
         
         const posts = await Post.find(query);
         //console.log(posts)
-        res.render('posts', {posts: posts, failed: false});
+        res.render('posts', {posts: posts, failed: false, loggedIn: req.cookies.login});
     } catch (error) {
         //res.status(500).json({ error: error.message });
-        res.render('posts', {failed: true})
+        res.render('posts', {failed: true, loggedIn: req.cookies.login})
     }
 });
 
@@ -92,9 +96,8 @@ postsRouter.get('/post/:id', async (req, res, next) =>{
   //console.log(id);
   const post = await Post.findById(id);
   //console.log(post)
-  res.render('postPage', {post: post});
+  res.render('postPage', {post: post, loggedIn: req.cookies.login});
 });
-
 
 module.exports = postsRouter;
  

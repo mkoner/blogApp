@@ -12,6 +12,10 @@
     </style>
 </head>
 <body>
+    <header>
+        <%- include('./components/header.html', {loggedIn: loggedIn}) %>
+    </header>
+    
     <div class="post-page">
         <h4><%= post.title %></h4>
         <div class="post-page-image">

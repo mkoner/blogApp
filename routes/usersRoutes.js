@@ -11,7 +11,6 @@ const usersRouter = express.Router(options);
 
 const User = require("../models/user");
 
-
 // USER STORAGE
 //let users = [{email: 's@d', password: 's'}];
 
@@ -20,17 +19,13 @@ const saltRounds = 7;
 
 // MAIN PAGE
 usersRouter.get('/', function(req,res,next){
-
-    // ## implement for all other pages
-    res.render('main',{loggedIn: req.cookies.login});
-    
-
+        res.render('main',{loggedIn: req.cookies.login});
 })
 
 
 // LOGIN
 usersRouter.get('/login', function (req, res, next) {
-    res.render('login',{failed:false});
+    res.render('login',{failed:false, loggedIn: req.cookies.login});
 });
 
 usersRouter.post('/login', async function (req, res, next) {
@@ -38,12 +33,12 @@ usersRouter.post('/login', async function (req, res, next) {
     const {email, password} = req.body;
     const user = await User.findOne({email});
     if(user && bcrypt.compareSync(password, user.password)){
-        res.redirect('/');
-         //## same for register
+        //## same for register
         res.cookie('login',user._id);
+        res.redirect('back');
     }
     else{
-        res.render('login', {failed:true});
+        res.render('login', {failed:true, loggedIn: req.cookies.login});
     }
     
     /*
@@ -69,7 +64,7 @@ usersRouter.post('/login', async function (req, res, next) {
 
 // REGISTRATION
 usersRouter.get('/registration', function (req, res, next) {
-    res.render('registration',{emailUsed:false});
+    res.render('registration',{emailUsed:false, loggedIn: req.cookies.login});
 });
 
 usersRouter.post('/registration', async function (req, res, next) {
@@ -85,8 +80,8 @@ usersRouter.post('/registration', async function (req, res, next) {
     let emailUsed = false;
 
     try {
-        await newUser.save();
-        console.log("User created successfully!");
+        const user = await newUser.save();
+        console.log("User created successfully! ");
         //## 
         res.cookie('login',user._id);
     } catch (error) {
@@ -97,7 +92,7 @@ usersRouter.post('/registration', async function (req, res, next) {
     
     // #redirect to registration page if error otherwise home page
     if(emailUsed)
-      res.render('registration', {emailUsed:true});
+      res.render('registration', {emailUsed:true, loggedIn: req.cookies.login});
     else
       res.redirect('/');
 
@@ -116,6 +111,13 @@ usersRouter.post('/registration', async function (req, res, next) {
 
     users.push(user);
     */
+});
+
+
+// LOGOUT
+usersRouter.get('/logout', function (req, res, next) {
+    res.clearCookie('login');
+    res.redirect('/');
 });
 
 

@@ -9,6 +9,10 @@
 </head>
 
 <body>
+    <header>
+        <%- include('./components/header.html', {loggedIn: loggedIn}) %>
+    </header>
+    
     <% if (failed) { %>
         <div>
             Something went wrong!

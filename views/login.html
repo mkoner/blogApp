@@ -10,21 +10,29 @@
 </head>
 
 <body>
+    <header>
+        <%- include('./components/header.html', {loggedIn: loggedIn}) %>
+    </header>
 
-    <form action="/login" method="post">
+    <div>
+        <form action="/login" method="post">
 
-        <h3>LOGIN</h3>
-
-        <label>email:</label>
-        <input type="email" name="email" id="email">
-        <br><br>
-
-        <label>password:</label>
-        <input type="password" name="password" id="password">
-        <br><br>
-
-        <button type="submit">Login</button>
-    </form>
+            <h3>LOGIN</h3>
+    
+            <label>email:</label>
+            <input type="email" name="email" id="email">
+            <br><br>
+    
+            <label>password:</label>
+            <input type="password" name="password" id="password">
+            <br><br>
+    
+            <button type="submit">Login</button>
+        </form>
+        <div>
+            Don't have an account? <a href="/registration">Register</a>
+        </div>
+    </div>
 
     <div id="loginFailed" class= <%= failed ? "" : "noDisplay" %>>
         <hr>
