@@ -18,6 +18,9 @@
     </script>
 </head>
 <body>
+    <header>
+        <%- include('./components/header.html', {loggedIn: loggedIn}) %>
+    </header>
     <div class="profile-page">
         <div class="profile-account">
             <h3>ACCOUNT</h3>
@@ -47,6 +50,12 @@
         </div>
         <div class="profile-posts">
             <h3>POSTS</h3>
+            <% if (postError) { %>
+                <div class="error-message">
+                    <%= postError %>
+                </div>
+               <% } %>
+               
             <% if (posts.length > 0) { %>
                 <table>
                     <thead>
@@ -61,7 +70,11 @@
                                 <td><a href=" <%= `/posts/update/${post._id }` %> ">
                                     <button id="updateProfile">Update</button>
                                 </a></td>
-                                <td><button>Delete</button></td>
+                                <td>
+                                    <a href=" <%= `/posts/delete/${post._id }` %> ">
+                                        <button>Delete</button>
+                                    </a>
+                                </td>
                             </tr>
                         <% } %>
                     </tbody>

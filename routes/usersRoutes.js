@@ -122,9 +122,13 @@ usersRouter.get('/logout', function (req, res, next) {
 });
 
 usersRouter.get('/profile', async(req, res, next) =>{
-    const user = await User.findById(req.cookies.login);
-    const posts = await Post.find({ownerId: user._id});
-    res.render('profile', {user: user, posts: posts, accountError: false});
+    if(req.cookies.login){
+        const user = await User.findById(req.cookies.login);
+        const posts = await Post.find({ownerId: user._id});
+        res.render('profile', {user: user, posts: posts, accountError: false, loggedIn: req.cookies.login, postError: false});
+    }
+    else
+      res.render('login',{failed:false, loggedIn: req.cookies.login});
 });
 
 usersRouter.post('/users/update/:id', async(req, res, next)=>{
@@ -142,12 +146,10 @@ usersRouter.post('/users/update/:id', async(req, res, next)=>{
         const user = await User.findById(req.cookies.login);
         const posts = await Post.find({ownerId: user._id});
         if(error.codeName == 'DuplicateKey')
-          res.render('profile', {user: user, posts: posts, accountError: "This email already exists"});
+          res.render('profile', {user: user, posts: posts, accountError: "This email already exists", loggedIn: req.cookies.login, postError: false});
         else
-          res.render('profile', {user: user, posts: posts, accountError: "Something went wrong try again"});
-    }
-    
-    
+          res.render('profile', {user: user, posts: posts, accountError: "Something went wrong try again", loggedIn: req.cookies.login, postError: false});
+    }  
 });
 
 
