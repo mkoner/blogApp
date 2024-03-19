@@ -1,7 +1,5 @@
-/* * {
-    border: 1px solid blue;
-} */
 
+/*
 body {
 
     display: flex;
@@ -48,6 +46,7 @@ body {
 .nav-element:hover {
     background-color: rgb(249, 240, 120);
 }
+*/
 
 .noDisplay {
     display: none;
