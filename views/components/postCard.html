@@ -31,19 +31,27 @@
     gap: 20px
         }
 
+        .titleArticle {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+           
+        }
+
+
+        .contentContainer {
+            word-break: break-word;
+           
+            line-height: 1.5;
+            height: 60%;
+        }
+
 
         .textArticle {
             display: -webkit-box;
             -webkit-box-orient: vertical;
             overflow: hidden;
             -webkit-line-clamp: 3;
-        }
-
-        .contentContainer {
-            word-break: break-word;
-            overflow: hidden;
-            line-height: 1.5;
-            height: 60%;
         }
 
         
@@ -64,11 +72,11 @@
 
         <div class="textDiv">
 
-            <!-- <div id="Date" class="textArticle">
+              <!-- <div id="Date" class="textArticle">
                 <%= post.postedDate %>
             </div> -->
 
-            <div id="Title" class="textArticle"><strong>
+            <div id="Title" class="titleArticle"><strong>
                     <%= post.title.toUpperCase() %>
                 </strong></div>
 
