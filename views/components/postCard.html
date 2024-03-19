@@ -5,10 +5,14 @@
 .articleContainer {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    width: 80%;
-    min-height: 200px;
+    min-height: 190px;
     border: 1px solid lightgray;
-    
+    margin: 0;
+}
+
+.articleContainer:hover{
+    border-color: black;
+    cursor: pointer;
 }
 
 
@@ -43,7 +47,7 @@
 
 @media only screen and (max-width: 750px) {
     .articleContainer {
-        width: 100%;
+        margin: 0%;
     }
 }
 
