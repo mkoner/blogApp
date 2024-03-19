@@ -26,6 +26,12 @@ app.use('/css', express.static(path.join(__dirname, 'views', 'css')));
 app.use('/uploads', express.static(path.join(__dirname, 'views', 'uploads')));
 
 
+// page not found
+app.use((req, res, next)=>{
+    res.render('404', {loggedIn: req.cookies.login});
+})
+
+
 
 
   // connect to the mongoDB

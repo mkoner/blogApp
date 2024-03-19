@@ -8,10 +8,10 @@
 </head>
 <body>
     <header>
-        <%- include('./components/header.html', {loggedIn: true}) %>
+        <%- include('./components/header.html', {loggedIn: loggedIn}) %>
     </header>
     
-    <form action="<%= `/posts/update/${post._id}` %>" method="post" enctype="multipart/form-data">
+    <form action="<%= `/posts/update/${post._id}` %>" method="post">
         <h3>Update post</h3>
         <div>
             <label for="title">Title</label>
@@ -20,13 +20,6 @@
         <div>
             <label for="content">content</label><br>
             <textarea name="content" id="content" cols="30" rows="10"><%= post.content %></textarea>
-        </div>
-        <div>
-            <img src=" <%= `/uploads/${post.imageUrl}` %> " alt="illustration">
-        </div>
-        <div>
-            <label for="image">Image</label>
-            <input type="file" name="file" id="image">
         </div>
         <button>Update Post</button>
     </form>

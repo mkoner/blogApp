@@ -101,36 +101,52 @@ postsRouter.get('/post/:id', async (req, res, next) =>{
 });
 
 postsRouter.get('/posts/update/:id', async(req, res, next) => {
-  const {id} = req.params;
-  const post = await Post.findById(id);
-  console.log(post)
-  res.render('updatePost', {post: post, failed: false});
+
+  if(req.cookies.login){
+    const {id} = req.params;
+    const post = await Post.findById(id);
+    //console.log(post)
+    res.render('updatePost', {post: post, failed: false, loggedIn: req.cookies.login});
+  } else 
+    res.render('login',{failed:false, loggedIn: req.cookies.login});
 });
 
 
-// To continue 
-postsRouter.post('/posts/update/:id', upload.single('file'), async (req, res, next) =>{
-  //console.log("file: ", req.file)
-    const imageUrl = req.file.filename;
-    const ownerId = req.cookies.login;
-    const newPost = new Post({
-        imageUrl, 
-        ownerId, 
-        title: req.body.title, 
-        content: req.body.content, 
-        postedDate: new Date()});
-        let isError = false;
-    try {
-        await newPost.save();
-        console.log("Post created successfully!");
-    } catch (error) {
-        console.error("Error creating post:", error.message);
-        isError = true;
-    }
-    if(isError){
-        res.render('createPost', {failed: true, loggedIn: req.cookies.login})
-    } else
-      res.redirect('/posts');
+// Route to update a post
+postsRouter.post('/posts/update/:id',  async (req, res, next) =>{
+
+  // console.log("update post")
+  // console.log(req.body);
+  // console.log(req.params.id);
+  const filter = {_id: req.params.id};
+  const newPost = {};
+  for(let prop in req.body){
+      if(req.body[prop]) 
+        newPost[prop] = req.body[prop];
+  }
+  //console.log(newPost);
+  try {
+      await Post.findByIdAndUpdate(filter, newPost);
+      res.redirect('back');
+  } catch (error) {
+    res.render('updatePost', {post: post, failed: true, loggedIn: req.cookies.login});
+  }  
+
+});
+
+// Route to delete a post
+postsRouter.get('/posts/delete/:id',  async (req, res, next) =>{
+
+  const {id} = req.params;
+  try {
+      await Post.findByIdAndDelete(id);
+      res.redirect('back');
+  } catch (error) {
+    const user = await User.findById(req.cookies.login);
+    const posts = await Post.find({ownerId: user._id});
+    res.render('profile', {user: user, posts: posts, accountError: false, loggedIn: req.cookies.login, postError: "Error deleting post"});
+  }  
+
 });
 
 module.exports = postsRouter;
