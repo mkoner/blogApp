@@ -1,4 +1,43 @@
 
+/* * {
+    border: 1px solid blue;
+} */
+
+body {
+
+    display: flex;
+
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-flow: column;
+}
+
+
+.flex {
+    display: flex;
+
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-flow: column;
+}
+
+#header {
+
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    border: ;
+}
+
+.nav-element {
+    padding: 5px;
+}
+
+.nav-element:hover {
+    background-color: rgb(249, 240, 120); 
+}
 
 .noDisplay {
     display: none;
