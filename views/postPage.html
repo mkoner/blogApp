@@ -18,6 +18,10 @@
     
     <div class="post-page">
         <h4><%= post.title %></h4>
+        <p>
+            <span>By <%= author.username %> </span>
+            <span> <%= post.postedDate.toLocaleDateString() %> </span>
+        </p>
         <div class="post-page-image">
             <figure>
                 <img src="<%= `/uploads/${post.imageUrl}` %>" alt="illustrative image">

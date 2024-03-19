@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <header>
+        <%- include('./components/header.html', {loggedIn: true}) %>
+    </header>
+    
+    <form action="<%= `/posts/update/${post._id}` %>" method="post" enctype="multipart/form-data">
+        <h3>Update post</h3>
+        <div>
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title" value=" <%= post.title %> ">
+        </div>
+        <div>
+            <label for="content">content</label><br>
+            <textarea name="content" id="content" cols="30" rows="10"><%= post.content %></textarea>
+        </div>
+        <div>
+            <img src=" <%= `/uploads/${post.imageUrl}` %> " alt="illustration">
+        </div>
+        <div>
+            <label for="image">Image</label>
+            <input type="file" name="file" id="image">
+        </div>
+        <button>Update Post</button>
+    </form>
+    <div class= <%= failed ? "" : "noDisplay" %>>
+        <hr>
+        <p>
+            Error updating post, please try again
+        </p>
+    </div>
+</body>
+</html>

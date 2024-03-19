@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        let updateProfileBtn; 
+        $(document).ready(()=>{
+            updateProfileBtn = $("#updateProfile");
+        });
+        function updateProfile(id){
+            //console.log(id);
+            window.location.href =  `/posts/update/${id}`;
+        }
+    </script>
+</head>
+<body>
+    <div class="profile-page">
+        <div class="profile-account">
+            <h3>ACCOUNT</h3>
+            <form action="<%= `/users/update/${user._id}` %>" method="post">
+                <% if (accountError) { %>
+                    <div class="error-message">
+                        <%= accountError %>
+                    </div>
+                <% } %>
+                <div>
+                    <label>username:</label>
+                    <input type="text" name="username" id="username" value=" <%= user.username %> ">
+                </div>
+
+                <div>
+                    <label>email:</label>
+                    <input type="email" name="email" id="email" value=" <%= user.email %> ">
+                </div>
+
+                <div>
+                    <label>password:</label>
+                    <input type="password" name="password" id="password">
+                </div>
+        
+                <button type="submit">Update</button>
+            </form>
+        </div>
+        <div class="profile-posts">
+            <h3>POSTS</h3>
+            <% if (posts.length > 0) { %>
+                <table>
+                    <thead>
+                        <th>Title</th>
+                        <th>Date</th>
+                    </thead>
+                    <tbody>
+                        <% for(let post of posts ) { %>
+                            <tr>
+                                <td><%= post.title %></td>
+                                <td><%= post.postedDate.toLocaleDateString() %></td>
+                                <td><a href=" <%= `/posts/update/${post._id }` %> ">
+                                    <button id="updateProfile">Update</button>
+                                </a></td>
+                                <td><button>Delete</button></td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            <% } else {%>
+                <div>
+                    You have not posted anything yet <br>
+                    Write your <a href="/posts/new">first post</a>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>

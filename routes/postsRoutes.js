@@ -5,6 +5,7 @@ const postsRouter = express.Router();
 const multer = require('multer');
 
 const Post = require("../models/post");
+const User = require("../models/user");
 
 // Specify the folder where to upload files and filename
 const storage = multer.diskStorage({
@@ -41,7 +42,7 @@ postsRouter.get('/posts/new', (req, res, next) =>{
 postsRouter.post('/posts/new', upload.single('file'), async (req, res, next) =>{
     //console.log("file: ", req.file)
       const imageUrl = req.file.filename;
-      const ownerId = '65f898cc9789ff14307ce254'
+      const ownerId = req.cookies.login;
       const newPost = new Post({
           imageUrl, 
           ownerId, 
@@ -91,12 +92,45 @@ postsRouter.get('/posts', async(req, res, next) =>{
 
 // Get a specific post page
 postsRouter.get('/post/:id', async (req, res, next) =>{
-  //console.log("get single post")
   const {id} = req.params;
   //console.log(id);
   const post = await Post.findById(id);
-  //console.log(post)
-  res.render('postPage', {post: post, loggedIn: req.cookies.login});
+  const author = await User.findById(post.ownerId);
+  //console.log(author)
+  res.render('postPage', {post: post, author: author, loggedIn: req.cookies.login});
+});
+
+postsRouter.get('/posts/update/:id', async(req, res, next) => {
+  const {id} = req.params;
+  const post = await Post.findById(id);
+  console.log(post)
+  res.render('updatePost', {post: post, failed: false});
+});
+
+
+// To continue 
+postsRouter.post('/posts/update/:id', upload.single('file'), async (req, res, next) =>{
+  //console.log("file: ", req.file)
+    const imageUrl = req.file.filename;
+    const ownerId = req.cookies.login;
+    const newPost = new Post({
+        imageUrl, 
+        ownerId, 
+        title: req.body.title, 
+        content: req.body.content, 
+        postedDate: new Date()});
+        let isError = false;
+    try {
+        await newPost.save();
+        console.log("Post created successfully!");
+    } catch (error) {
+        console.error("Error creating post:", error.message);
+        isError = true;
+    }
+    if(isError){
+        res.render('createPost', {failed: true, loggedIn: req.cookies.login})
+    } else
+      res.redirect('/posts');
 });
 
 module.exports = postsRouter;

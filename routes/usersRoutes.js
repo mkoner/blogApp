@@ -10,6 +10,7 @@ const options = {
 const usersRouter = express.Router(options);
 
 const User = require("../models/user");
+const Post = require("../models/post");
 
 // USER STORAGE
 //let users = [{email: 's@d', password: 's'}];
@@ -120,6 +121,34 @@ usersRouter.get('/logout', function (req, res, next) {
     res.redirect('/');
 });
 
+usersRouter.get('/profile', async(req, res, next) =>{
+    const user = await User.findById(req.cookies.login);
+    const posts = await Post.find({ownerId: user._id});
+    res.render('profile', {user: user, posts: posts, accountError: false});
+});
+
+usersRouter.post('/users/update/:id', async(req, res, next)=>{
+    const filter = {_id: req.params.id};
+    const newUser = {};
+    for(let prop in req.body){
+        if(req.body[prop]) 
+          newUser[prop] = req.body[prop];
+    }
+    //console.log(newUser);
+    try {
+        await User.findByIdAndUpdate(filter, newUser);
+        res.redirect('back');
+    } catch (error) {
+        const user = await User.findById(req.cookies.login);
+        const posts = await Post.find({ownerId: user._id});
+        if(error.codeName == 'DuplicateKey')
+          res.render('profile', {user: user, posts: posts, accountError: "This email already exists"});
+        else
+          res.render('profile', {user: user, posts: posts, accountError: "Something went wrong try again"});
+    }
+    
+    
+});
 
 
 
