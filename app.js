@@ -24,6 +24,7 @@ app.use(usersRouter);
 app.use(postsRouter);
 app.use('/css', express.static(path.join(__dirname, 'views', 'css')));
 app.use('/uploads', express.static(path.join(__dirname, 'views', 'uploads')));
+app.use('/icons', express.static(path.join(__dirname, 'views', 'icons')));
 
 
 // page not found

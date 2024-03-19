@@ -6,9 +6,41 @@
     <title>Document</title>
     <link rel="stylesheet" href="/css/main.css">
     <style>
-        .post-page-image figure img{
-            max-height: 300px;
+
+        .post-page{
+            margin: 20px 10%;
+            border: 1px solid lightgrey;
+            padding: 10%;
+            text-align: left;
         }
+        .post-page-image img{
+            max-height: 300px;
+            width: 100%;
+            object-fit: fill;
+        }
+
+        .post-page-top{
+            display: flex;
+            justify-content: start;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .icon-image{
+            width: 30px;
+        }
+
+        .post-content{
+            white-space: pre-wrap;
+        }
+
+        @media only screen and (max-width: 500px) {
+            .post-page {
+                margin: 10px 5%;
+                padding: 5%;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -17,17 +49,23 @@
     </header>
     
     <div class="post-page">
-        <h4><%= post.title %></h4>
-        <p>
-            <span>By <%= author.username %> </span>
-            <span> <%= post.postedDate.toLocaleDateString() %> </span>
-        </p>
-        <div class="post-page-image">
-            <figure>
-                <img src="<%= `/uploads/${post.imageUrl}` %>" alt="illustrative image">
-            </figure>
+        <div class="post-page-top">
+            <div class="user-icon">
+                <img src="/icons/profile-user.png" alt="user icon" class="icon-image">
+            </div>
+            <div class="username">
+                <%= author.username %>
+            </div>
+            <span>-</span>
+            <div class="posted-date">
+                <%= post.postedDate.toLocaleDateString() %>
+            </div>
         </div>
-        <p> <%= post.content %> </p>
+        <h4><%= post.title.toUpperCase() %></h4>
+        <div class="post-page-image">
+            <img src="<%= `/uploads/${post.imageUrl}` %>" alt="illustrative image">
+        </div>
+        <p class="post-content"> <%= post.content %> </p>
     </div>
 
     <footer>
