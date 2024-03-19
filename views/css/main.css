@@ -1,4 +1,3 @@
-
 /* * {
     border: 1px solid blue;
 } */
@@ -16,11 +15,23 @@ body {
 
 .flex {
     display: flex;
+    flex-flow: wrap;
 
     justify-content: center;
     align-content: center;
     align-items: center;
-    flex-flow: column;
+
+
+}
+
+.flexColumn {
+    display: flex;
+    flex-flow: wrap column;
+
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+
 }
 
 #header {
@@ -28,7 +39,6 @@ body {
     display: flex;
     justify-content: center;
     gap: 25px;
-    border: ;
 }
 
 .nav-element {
@@ -36,18 +46,16 @@ body {
 }
 
 .nav-element:hover {
-    background-color: rgb(249, 240, 120); 
+    background-color: rgb(249, 240, 120);
 }
 
 .noDisplay {
     display: none;
 }
 
-.post-card{
-    
-}
+.post-card {}
 
-.post-card .bg-img-container{
+.post-card .bg-img-container {
     width: 250px;
     height: 150px;
     background-size: cover;
