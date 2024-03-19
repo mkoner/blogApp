@@ -1,13 +1,86 @@
+<head>
+    <meta charset="UTF-8">
+    <title>postCard</title>
+    <link rel="stylesheet" href="/css/main.css">
+
+
+    <style>
+
+
+.articleContainer {
+    display: flex;
+    width: 80%;
+    height: 200px;
+    border: 1px solid lightgray;
+    
+}
+
+
+.bg-img-container {
+    width: 50%;
+    background-size: cover;
+}
+        
+.textDiv {
+    width: 50%;
+    min-width: 100px;
+    display: flex;
+    padding: 8%;
+    flex-direction: column;
+    overflow: hidden;
+    gap: 20px
+        }
+
+
+        .textArticle {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            -webkit-line-clamp: 3;
+        }
+
+        .contentContainer {
+            word-break: break-word;
+            overflow: hidden;
+            line-height: 1.5;
+            height: 60%;
+        }
+
+        
+    </style>
+</head>
+
+
+
+
 
 <a href=" <%= `post/${post._id}` %> ">
-    <article class="post-card">
-        <div class="bg-img-container" style="background-image: url('<%= `/uploads/${post.imageUrl}` %>');">
-    
+
+    <div id="articleContainer" class="articleContainer">
+
+        <div class="bg-img-container"
+            style="background-image: url('<%= `/uploads/${post.imageUrl}` %>'); object-fit: fill;">
         </div>
-        <p>
-            <strong>
-                <%= post.title  %>
-            </strong>
-        </p>
-    </article>
+
+        <div class="textDiv">
+
+            <!-- <div id="Date" class="textArticle">
+                <%= post.postedDate %>
+            </div> -->
+
+            <div id="Title" class="textArticle"><strong>
+                    <%= post.title.toUpperCase() %>
+                </strong></div>
+
+            <div id="contentContainer" class="contentContainer">
+
+                <div id="content" class="textArticle">
+                    <%= post.content %>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
 </a>
