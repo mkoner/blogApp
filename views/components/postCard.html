@@ -1,52 +1,58 @@
 <head>
-    <meta charset="UTF-8">
-    <title>postCard</title>
-    <link rel="stylesheet" href="/css/main.css">
-
-
     <style>
 
 
 .articleContainer {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     width: 80%;
-    height: 200px;
+    min-height: 200px;
     border: 1px solid lightgray;
     
 }
 
 
 .bg-img-container {
-    width: 50%;
-    background-size: cover;
+    
 }
+
+.bg-img-container img{
+    width: 100%;
+    height: 100%;
+}
+
         
 .textDiv {
-    width: 50%;
+    
     min-width: 100px;
     display: flex;
-    padding: 8%;
+    padding: 5%;
     flex-direction: column;
-    overflow: hidden;
-    gap: 20px
-        }
+    justify-content: center;
+    gap: 10px
+}
 
+.truncate {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   -webkit-line-clamp: 3; /* number of lines to show */
+           line-clamp: 2;
+   -webkit-box-orient: vertical;
+}
 
-        .textArticle {
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            -webkit-line-clamp: 3;
-        }
+@media only screen and (max-width: 750px) {
+    .articleContainer {
+        width: 100%;
+    }
+}
 
-        .contentContainer {
-            word-break: break-word;
-            overflow: hidden;
-            line-height: 1.5;
-            height: 60%;
-        }
+@media only screen and (max-width: 400px) {
+    .articleContainer {
+        grid-template-columns: 1fr;
+    }
 
-        
+}        
     </style>
 </head>
 
@@ -58,8 +64,12 @@
 
     <div id="articleContainer" class="articleContainer">
 
-        <div class="bg-img-container"
+        <!-- <div class="bg-img-container"
             style="background-image: url('<%= `/uploads/${post.imageUrl}` %>'); object-fit: fill;">
+        </div> -->
+
+        <div class="bg-img-container">
+            <img src=" <%= `/uploads/${post.imageUrl}` %> " alt="">
         </div>
 
         <div class="textDiv">
@@ -74,7 +84,7 @@
 
             <div id="contentContainer" class="contentContainer">
 
-                <div id="content" class="textArticle">
+                <div id="content" class="textArticle truncate">
                     <%= post.content %>
                 </div>
             </div>
