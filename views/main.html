@@ -12,14 +12,35 @@
         grid-template-columns: 1fr;
         gap: 10px;
     }
+
+    #hero {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 500px;
+        margin-bottom: 40px;
+        background: #f2f2f2 url('icons/sunset-hero.jpeg') no-repeat top;
+        background-size: cover;
+    }
+
+    #hero-text {
+        animation: fadeIn 2s;
+    }
+
 </style>
 
 
 <body>
-    <!-- Header (MainPage, Show all Articles, Post, Login/Logout) -->
+    <!-- Header (MainPage, add hero, Show all Articles, Post, Login/Logout) -->
     <header>
         <%- include('./components/header.html', {loggedIn: loggedIn}) %>
     </header>
+
+    <div id="hero">
+        <h1 id="hero-text">Welcome to ALPHA Blog</h1>
+        <p>Here you can find the most popular and the latest articles as well as wap lessons</p>
+    </div>
 
     <main class="home-page main-container">
         <div class="most-popular-posts-container">
