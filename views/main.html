@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,62 +8,46 @@
 </head>
 
 <style>
-    .most-popular-posts, .latest-posts{
+    .most-popular-posts,
+    .latest-posts {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 10px;
+        gap: 20px;
     }
-
-    #hero {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 500px;
-        margin-bottom: 40px;
-        background: #f2f2f2 url('icons/sunset-hero.jpeg') no-repeat top;
-        background-size: cover;
-    }
-
-    #hero-text {
-        animation: fadeIn 2s;
-    }
-
 </style>
 
 
 <body>
-    <!-- Header (MainPage, add hero, Show all Articles, Post, Login/Logout) -->
-    <header>
-        <%- include('./components/header.html', {loggedIn: loggedIn}) %>
-    </header>
+    <div class="mainFrame">
 
-    <div id="hero">
-        <h1 id="hero-text">Welcome to ALPHA Blog</h1>
-        <p>Here you can find the most popular and the latest articles as well as wap lessons</p>
-    </div>
+        <!-- Header -->
+            <%- include('./components/header.html', {loggedIn: loggedIn}) %>
 
-    <main class="home-page main-container">
-        <div class="most-popular-posts-container">
-            <h3>Popular Articles</h3>
-            <div class="most-popular-posts">
-                <% for( let post of popular ) { %>
-                    <%- include('./components/postCard.html', {post}) %>
-                <% } %>
+
+        <main class="home-page main-container">
+            <div class="most-popular-posts-container">
+                <h3>Popular Articles</h3>
+                <div class="most-popular-posts">
+                    <% for( let post of popular ) { %>
+                        <%- include('./components/postCard.html', {post}) %>
+                            <% } %>
+                </div>
             </div>
-        </div>
-        <div class="latest-posts-container">
-            <h3>Latest Articles</h3>
-            <div class="latest-posts">
-                <% for( let post of latest ) { %>
-                    <%- include('./components/postCard.html', {post}) %>
-                <% } %>
+            <div class="latest-posts-container">
+                <h3>Latest Articles</h3>
+                <div class="latest-posts">
+                    <% for( let post of latest ) { %>
+                        <%- include('./components/postCard.html', {post}) %>
+                            <% } %>
+                </div>
             </div>
-        </div>
-    </main>
+        </main>
 
-    <footer>
+
+        <!-- footer -->
         <%- include('./components/footer.html') %>
-    </footer>
+
+    </div>
 </body>
+
 </html>

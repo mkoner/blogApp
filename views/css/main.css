@@ -1,7 +1,15 @@
 
+/* * {
+    border: 1px solid blue;
+} */
+
 body{
     margin: 0;
     width: 100%;
+    background-color: white;
+
+    display: flex;
+    justify-content: center;
 }
 
 header{
@@ -9,7 +17,6 @@ header{
     top: 0;
     z-index: 1000;
 }
-
 
 .main-container{
     text-align: center;
@@ -29,9 +36,15 @@ header{
 
 .mainFrame {
     width: 80%;
+    left: 10%;
+    /* background-color: rgb(255, 249, 228); */
+    /* border: 5px solid green; */
 
-    display: flex;
+    display:flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+     
 }
 
 .noDisplay {

@@ -6,12 +6,6 @@
     <title>header</title>
     <link rel="stylesheet" href="/css/main.css">
 
-    <script>
-        function goToMain(){
-            window.location.href = "/"
-        }
-    </script>
-
     <style>
 
         .SITE_HEADER_WRAPPER {
@@ -19,7 +13,7 @@
             grid-template-columns: 1fr 1fr;
             justify-content: space-between;
             align-items: center;
-            padding: 0 ;
+            padding: 0 0px;
             background: white;
             width: 100%;
             position: sticky;
@@ -27,7 +21,7 @@
             margin-bottom: 20px;
             z-index: 1000;
             box-shadow: grey 0 0 10px 0;
-            /* max-height: 80px; */
+            max-height: 80px;
         }
 
         .SITE_HEADER {
@@ -73,18 +67,7 @@
         #logo {
             height: 60%;
             width: auto;
-            cursor: pointer;
         }
-
-    @media only screen and (max-width: 600px) {
-        .SITE_HEADER_WRAPPER {
-            grid-template-columns: 1fr 4fr;
-            align-items: flex-start;
-        }
-        .SITE_HEADER{
-            flex-wrap: wrap;
-        }
-    }
 
     </style>
 </head>
@@ -93,9 +76,9 @@
 <header class="SITE_HEADER_WRAPPER" id="SITE_HEADER_WRAPPER">
 
     <div class="logo-container">
-        <img id="logo" src="/icons/logo.png" alt="logo" onclick="goToMain()">
+        <img id="logo" src="/icons/logo.png" alt="logo">
     </div>
-  
+
     <nav id="header">
         <div class="SITE_HEADER">
 
