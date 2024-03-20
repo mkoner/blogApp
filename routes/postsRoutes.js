@@ -127,7 +127,7 @@ postsRouter.post('/posts/update/:id',  async (req, res, next) =>{
       if(req.body[prop]) 
         newPost[prop] = req.body[prop].trim();
   }
-  console.log(newPost);
+  //console.log(newPost);
   try {
       await Post.findByIdAndUpdate(filter, newPost);
       res.redirect('back');

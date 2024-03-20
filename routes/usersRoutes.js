@@ -143,12 +143,12 @@ usersRouter.get('/profile', async(req, res, next) =>{
 usersRouter.post('/users/update/:id', async(req, res, next)=>{
     const filter = {_id: req.params.id};
     const newUser = {};
-    console.log(req.body);
+    //console.log(req.body);
     for(let prop in req.body){
         if(req.body[prop]) 
           newUser[prop] = prop=="password"? bcrypt.hashSync(req.body[prop], saltRounds) : req.body[prop].trim();
     }
-    console.log(newUser);
+    //console.log(newUser);
     try {
         await User.findByIdAndUpdate(filter, newUser);
         res.redirect('back');
