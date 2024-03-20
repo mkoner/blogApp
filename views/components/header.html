@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="/css/main.css">
 
     <style>
-
-.SITE_HEADER_WRAPPER {
+    .SITE_HEADER_WRAPPER {
             display: grid;
             grid-template-columns: 1fr 1fr;
             justify-content: space-between;
@@ -18,7 +17,7 @@
             width: 100%;
             position: sticky;
             top: 0;
-            margin-bottom: 20px;
+            margin-bottom: 5px;
             z-index: 1000;
             box-shadow: grey 0 0 10px 0;
             /* max-height: 80px; */
@@ -52,8 +51,9 @@
         .auth {
             background: rgba(217, 18, 18, 0.89);
             padding: 10px;
-            box-shadow: 0 0 10px 0;
-            color: white;
+            color: white !important;
+            box-shadow: 0 2px 5px 0 #000;
+            
         }
 
         .logo-container {
@@ -81,13 +81,18 @@
     }
 
     </style>
+    <script>
+        function goToMain(){
+            window.location.href = "/"
+        }
+    </script>
 </head>
 
 <body>
 <header class="SITE_HEADER_WRAPPER" id="SITE_HEADER_WRAPPER">
 
     <div class="logo-container">
-        <img id="logo" src="/icons/logo.png" alt="logo">
+        <img id="logo" src="/icons/logo.png" alt="logo" onclick="goToMain()">
     </div>
 
     <nav id="header">
