@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,41 +8,46 @@
 </head>
 
 <style>
-    .most-popular-posts, .latest-posts{
+    .most-popular-posts,
+    .latest-posts {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 10px;
+        gap: 20px;
     }
 </style>
 
 
 <body>
-    <!-- Header (MainPage, Show all Articles, Post, Login/Logout) -->
-    <header>
-        <%- include('./components/header.html', {loggedIn: loggedIn}) %>
-    </header>
+    <div class="mainFrame">
 
-    <main class="home-page main-container">
-        <div class="most-popular-posts-container">
-            <h3>Popular Articles</h3>
-            <div class="most-popular-posts">
-                <% for( let post of popular ) { %>
-                    <%- include('./components/postCard.html', {post}) %>
-                <% } %>
-            </div>
-        </div>
-        <div class="latest-posts-container">
-            <h3>Latest Articles</h3>
-            <div class="latest-posts">
-                <% for( let post of latest ) { %>
-                    <%- include('./components/postCard.html', {post}) %>
-                <% } %>
-            </div>
-        </div>
-    </main>
+        <!-- Header -->
+            <%- include('./components/header.html', {loggedIn: loggedIn}) %>
 
-    <footer>
+
+        <main class="home-page main-container">
+            <div class="most-popular-posts-container">
+                <h3>Popular Articles</h3>
+                <div class="most-popular-posts">
+                    <% for( let post of popular ) { %>
+                        <%- include('./components/postCard.html', {post}) %>
+                            <% } %>
+                </div>
+            </div>
+            <div class="latest-posts-container">
+                <h3>Latest Articles</h3>
+                <div class="latest-posts">
+                    <% for( let post of latest ) { %>
+                        <%- include('./components/postCard.html', {post}) %>
+                            <% } %>
+                </div>
+            </div>
+        </main>
+
+
+        <!-- footer -->
         <%- include('./components/footer.html') %>
-    </footer>
+
+    </div>
 </body>
+
 </html>

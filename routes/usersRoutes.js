@@ -30,6 +30,12 @@ usersRouter.get('/', async function(req,res,next){
 
 // LOGIN
 usersRouter.get('/login', function (req, res, next) {
+
+    if(req.cookies.login){
+        //## redirect if already logged in
+        res.redirect('/');
+    }
+
     res.render('login',{failed:false, loggedIn: req.cookies.login});
 });
 

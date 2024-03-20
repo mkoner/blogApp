@@ -12,48 +12,66 @@
         .register:link,
         .register:visited,
         .register:hover,
-        .register:active{
+        .register:active {
             color: #FFF;
             background-color: #000;
             padding: 7px;
         }
+
+        .loginBody {
+            width: 50%;
+            min-width: 300px;
+
+            display: flex;
+            flex-direction: column;
+         
+        }
+
+
     </style>
 </head>
 
 <body>
-    <header>
-        <%- include('./components/header.html', {loggedIn: loggedIn}) %>
-    </header>
-    <hr>
 
-    <div>
-        <form action="/login" method="post">
-
-            <h3>LOGIN</h3>
-    
-            <label>email:</label>
-            <input type="email" name="email" id="email">
-            <br><br>
-    
-            <label>password:</label>
-            <input type="password" name="password" id="password">
-            <br><br>
-    
-            <button type="submit">Login</button>
-        </form>
-        <div>
-            Don't have an account? <a href="/registration" class="register">Register</a>
-        </div>
-    </div>
-
-    <div id="loginFailed" class= <%= failed ? "" : "noDisplay" %>>
+    <div class="mainFrame">
+       
+            <%- include('./components/header.html', {loggedIn: loggedIn}) %>
+     
         <hr>
-        <label>Login failed - Please try again</label>
-    </div>
-    <footer>
-        <%- include('./components/footer.html') %>
-    </footer>
 
+        <div class="loginBody">
+            <form action="/login" method="post">
+
+                <h3>LOGIN</h3>
+
+                <label>email:</label>
+                <input type="email" name="email" id="email">
+                <br><br>
+
+                <label>password:</label>
+                <input type="password" name="password" id="password">
+                <br><br>
+
+                <button type="submit">Login</button>
+            </form>
+            <div>
+                Don't have an account? <a href="/registration" class="register">Register</a>
+            </div>
+
+
+            <div id="loginFailed" class=<%=failed ? "" : "noDisplay" %>>
+                <hr>
+                <label>Login failed - Please try again</label>
+            </div>
+
+        </div>
+
+
+            <!-- footer -->
+            <%- include('./components/footer.html') %>
+        
+
+    </div>
 </body>
 
 </html>

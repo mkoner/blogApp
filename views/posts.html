@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,62 +8,75 @@
     <link rel="stylesheet" href="/css/main.css">
 
     <style>
-        .posts-container{
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
+
+        .postsDiv {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+
         }
 
-        .search-posts{
-            padding:10px 10px;
-            border-radius:16px;
+        .posts-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .search-posts {
+            padding: 10px 10px;
+            border-radius: 16px;
             box-shadow: 3px 5px 4px #4C5A65;
             margin: 10px 0;
             display: flex;
             justify-content: center;
         }
 
-        .search-posts button{
+        .search-posts button {
             margin: 0;
             padding: 8px;
         }
-
     </style>
-    
+
 </head>
 
 <body>
-    <header>
-        <%- include('./components/header.html', {loggedIn: loggedIn}) %>
-    </header>
-     <div class="posts-page main-container">
-        <% if (failed) { %>
-            <div>
-                Something went wrong!
-            </div>
-        <% }  else {%>
-            <div>
-                <form action="posts" method="get" class="search-posts">
-                    <input type="text" name="searchQuery" placeholder="search by keywords">
-                    <button>Search</button>
-                </form>
-                <% if (posts.length == 0) { %>
-                 <div>
-                    No post found
-                 </div>
+    <div class="mainFrame">
+
+        <!-- <header> -->
+            <%- include('./components/header.html', {loggedIn: loggedIn}) %>
+      
+            
+        <div class="posts-page main-container">
+            <% if (failed) { %>
+                <div>
+                    Something went wrong!
+                </div>
                 <% } else {%>
-                    <section class="posts-container">   
-                        <% for( let post of posts) { %>
-                            <%- include('components/postCard.html', {post: post}) %>  
-                        <% } %>
-                    </section>
-                <% } %>
-            </div>
-        <% } %>
-     </div>
-    
-    <footer>
-        <%- include('./components/footer.html') %>
-    </footer>
+                    <div class="postsDiv">
+                        <form action="posts" method="get" class="search-posts">
+                            <input type="text" name="searchQuery" placeholder="search by keywords">
+                            <button>Search</button>
+                        </form>
+                        <% if (posts.length==0) { %>
+                            <div>
+                                No post found
+                            </div>
+                            <% } else {%>
+                                <section class="posts-container">
+                                    <% for( let post of posts) { %>
+                                        <%- include('components/postCard.html', {post: post}) %>
+                                            <% } %>
+                                </section>
+                                <% } %>
+                    </div>
+                    <% } %>
+        </div>
+
+
+        <!-- <footer> -->
+            <%- include('./components/footer.html') %>
+
+    </div>
 </body>
+
 </html>

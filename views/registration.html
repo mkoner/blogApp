@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,37 +9,41 @@
 </head>
 
 <body>
-    <header>
-        <%- include('./components/header.html', {loggedIn: loggedIn}) %>
-    </header>
-    
-    <form action="/registration" method="post">
+    <div class="mainFrame">
 
-        <h3>REGISTRATION</h3>
+        <!-- <header> -->
+            <%- include('./components/header.html', {loggedIn: loggedIn}) %>
 
-        <label>email:</label>
-        <input type="email" name="email" id="email">
-        <br><br>
+        <form action="/registration" method="post">
+
+            <h3>REGISTRATION</h3>
+
+            <label>email:</label>
+            <input type="email" name="email" id="email">
+            <br><br>
 
 
-        <label>password:</label>
-        <input type="password" name="password" id="password">
-        <br><br>
+            <label>password:</label>
+            <input type="password" name="password" id="password">
+            <br><br>
 
-        <label>username:</label>
-        <input type="text" name="username" id="username">
-        <br><br>
+            <label>username:</label>
+            <input type="text" name="username" id="username">
+            <br><br>
 
-        <button type="submit">Register</button>
-    </form>
+            <button type="submit">Register</button>
+        </form>
 
-    <div id="loginFailed" class= <%= emailUsed ? "" : "noDisplay" %>>
-        <hr>
-        <label>Registration failed - Email already used.</label>
+        <div id="loginFailed" class=<%=emailUsed ? "" : "noDisplay" %>>
+            <hr>
+            <label>Registration failed - Email already used.</label>
+        </div>
+
+
+        <!-- <footer> -->
+            <%- include('./components/footer.html') %>
+
     </div>
-
-    <footer>
-        <%- include('./components/footer.html') %>
-    </footer>
 </body>
+
 </html>

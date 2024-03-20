@@ -1,36 +1,37 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/css/main.css">
     <style>
-
-        .post-page{
+        .post-page {
             margin: 20px 10%;
             border: 1px solid lightgrey;
             padding: 10%;
             text-align: left;
         }
-        .post-page-image img{
+
+        .post-page-image img {
             max-height: 300px;
             width: 100%;
             object-fit: fill;
         }
 
-        .post-page-top{
+        .post-page-top {
             display: flex;
             justify-content: start;
             gap: 10px;
             align-items: center;
         }
 
-        .icon-image{
+        .icon-image {
             width: 30px;
         }
 
-        .post-content{
+        .post-content {
             white-space: pre-wrap;
         }
 
@@ -40,36 +41,44 @@
                 padding: 5%;
             }
         }
-
     </style>
 </head>
-<body>
-    <header>
-        <%- include('./components/header.html', {loggedIn: loggedIn}) %>
-    </header>
-    
-    <div class="post-page">
-        <div class="post-page-top">
-            <div class="user-icon">
-                <img src="/icons/profile-user.png" alt="user icon" class="icon-image">
-            </div>
-            <div class="username">
-                <%= author.username %>
-            </div>
-            <span>-</span>
-            <div class="posted-date">
-                <%= post.postedDate.toLocaleDateString() %>
-            </div>
-        </div>
-        <h4><%= post.title.toUpperCase() %></h4>
-        <div class="post-page-image">
-            <img src="<%= `/uploads/${post.imageUrl}` %>" alt="illustrative image">
-        </div>
-        <p class="post-content"> <%= post.content %> </p>
-    </div>
 
-    <footer>
-        <%- include('./components/footer.html') %>
-    </footer>
+<body>
+    <div class="mainFrame">
+
+        <!-- <header> -->
+        <%- include('./components/header.html', {loggedIn: loggedIn}) %>
+
+            <div class="post-page">
+                <div class="post-page-top">
+                    <div class="user-icon">
+                        <img src="/icons/profile-user.png" alt="user icon" class="icon-image">
+                    </div>
+                    <div class="username">
+                        <%= author.username %>
+                    </div>
+                    <span>-</span>
+                    <div class="posted-date">
+                        <%= post.postedDate.toLocaleDateString() %>
+                    </div>
+                </div>
+                <h4>
+                    <%= post.title.toUpperCase() %>
+                </h4>
+                <div class="post-page-image">
+                    <img src="<%= `/uploads/${post.imageUrl}` %>" alt="illustrative image">
+                </div>
+                <p class="post-content">
+                    <%= post.content %>
+                </p>
+            </div>
+
+
+            <!-- footer -->
+            <%- include('./components/footer.html') %>
+
+    </div>
 </body>
+
 </html>
