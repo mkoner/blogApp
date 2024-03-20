@@ -30,7 +30,10 @@ usersRouter.get('/', async function(req,res,next){
 
 // LOGIN
 usersRouter.get('/login', function (req, res, next) {
-    res.render('login',{failed:false, loggedIn: req.cookies.login});
+    if(req.cookies.login)
+      res.redirect('back');
+    else
+      res.render('login',{failed:false, loggedIn: req.cookies.login});
 });
 
 usersRouter.post('/login', async function (req, res, next) {
@@ -140,9 +143,10 @@ usersRouter.get('/profile', async(req, res, next) =>{
 usersRouter.post('/users/update/:id', async(req, res, next)=>{
     const filter = {_id: req.params.id};
     const newUser = {};
+    console.log(req.body);
     for(let prop in req.body){
         if(req.body[prop]) 
-          newUser[prop] = prop=="password"? req.body[prop] : req.body[prop].trim();
+          newUser[prop] = prop=="password"? bcrypt.hashSync(req.body[prop], saltRounds) : req.body[prop].trim();
     }
     console.log(newUser);
     try {

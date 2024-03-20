@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+<style>
+#page-not-found {
+text-align: center;
+font-family: Arial, sans-serif;  
+margin: 50px;
+}
+
+h1 {
+font-size: 3em;
+color: #666; 
+}
+
+#page-not-found p {
+font-size: 1.2em;  
+color: #333; 
+}
+</style>
+</head>
+<body>
+    <header>
+        <%- include('./components/header.html', {loggedIn: loggedIn}) %>
+    </header>
+    <div id="page-not-found">
+        <h1>Oops! Something went wrong</h1>
+    </div>
+    <footer>
+        <%- include('./components/footer.html') %>
+    </footer>
+</body>
+</html>

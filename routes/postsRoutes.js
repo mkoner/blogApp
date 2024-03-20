@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
     filename: function (req, file, callback) {
         const ext = file.originalname.split('.').pop();
         const date = new Date();
-      callback(null, req.body.title + date.valueOf() +'.'+ ext);
+      callback(null, req.body.title.replaceAll(' ','') + date.valueOf() +'.'+ ext);
     }
   });
 
@@ -34,7 +34,7 @@ const storage = multer.diskStorage({
 postsRouter.get('/posts/new', (req, res, next) =>{
     const isLoggedIn = req.cookies.login;
     if(isLoggedIn)
-      res.render('createPost', {failed: false, loggedIn: req.cookies.login});
+      res.render('createPost', {failed: false, loggedIn: req.cookies.login, notImage: false});
     else
       res.render('login',{failed:false, loggedIn: req.cookies.login});
 });
@@ -46,8 +46,8 @@ postsRouter.post('/posts/new', upload.single('file'), async (req, res, next) =>{
       const newPost = new Post({
           imageUrl, 
           ownerId, 
-          title: req.body.title, 
-          content: req.body.content, 
+          title: req.body.title.trim(), 
+          content: req.body.content.trim(),
           postedDate: new Date()});
           let isError = false;
       try {
@@ -58,7 +58,7 @@ postsRouter.post('/posts/new', upload.single('file'), async (req, res, next) =>{
           isError = true;
       }
       if(isError){
-          res.render('createPost', {failed: true, loggedIn: req.cookies.login})
+          res.render('createPost', {failed: true, loggedIn: req.cookies.login, notImage: false})
       } else
         res.redirect('/posts');
 });

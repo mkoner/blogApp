@@ -24,18 +24,17 @@
     <header>
         <%- include('./components/header.html', {loggedIn: loggedIn}) %>
     </header>
-    <hr>
 
     <div>
-        <% if (failed) { %>
-            <div id="loginFailed" class="error-message">
-                <label>Login failed - Please try again</label>
-                <hr>
-            </div>
-        <% } %>
         <form action="/login" method="post">
 
             <h3>LOGIN</h3>
+            <% if (failed) { %>
+                <div id="loginFailed" class="error-message">
+                    <label>Login failed - Please try again</label>
+                </div>
+                <hr>
+            <% } %>
     
             <div class="form-element">
                 <label>email:</label>

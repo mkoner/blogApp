@@ -13,15 +13,17 @@
     </header>
     
     <div>
-        <% if (emailUsed) { %>
-            <div id="loginFailed" class="error-message" %>>
-                <label>Registration failed - Email already used.</label>
-                <hr>
-            </div>
-        <% } %>
+
         <form action="/registration" method="post">
 
             <h3>CREATE AN ACCOUNT</h3>
+
+            <% if (emailUsed) { %>
+                <div id="loginFailed" class="error-message" %>>
+                    <label>Registration failed - Email already used.</label>
+                </div>
+                <hr>
+            <% } %>
     
             <div class="form-element">
                 <label>Name*:</label>

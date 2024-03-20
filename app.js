@@ -32,6 +32,13 @@ app.use((req, res, next)=>{
     res.render('404', {loggedIn: req.cookies.login});
 })
 
+app.use((err, req, res, next)=>{
+    if(err.message == "Only .png, .jpg and .jpeg format allowed!")
+      res.render('createPost', {failed: true, loggedIn: req.cookies.login, notImage: true})
+    else
+      res.render('500', {loggedIn: req.cookies.login});
+})
+
 
 
 
