@@ -19,8 +19,12 @@ const Post = require("../models/post");
 const saltRounds = 7;
 
 // MAIN PAGE
-usersRouter.get('/', function(req,res,next){
-        res.render('main',{loggedIn: req.cookies.login});
+usersRouter.get('/', async function(req,res,next){
+    const popularAll = await Post.find().sort({views: -1});
+    const latestAll = await Post.find().sort({postedDate: -1});
+    const popular = popularAll.slice(0, 4);
+    const latest = latestAll.slice(0, 4);
+    res.render('main',{loggedIn: req.cookies.login, popular, latest});
 })
 
 

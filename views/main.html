@@ -6,6 +6,13 @@
     <title>main</title>
 </head>
 
+<style>
+    .most-popular-posts, .latest-posts{
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+</style>
 
 
 <body>
@@ -14,12 +21,24 @@
         <%- include('./components/header.html', {loggedIn: loggedIn}) %>
     </header>
 
-
-    <div id="articleFrame">
-
-
-        
-    </div>
+    <main class="home-page main-container">
+        <div class="most-popular-posts-container">
+            <h3>Popular Articles</h3>
+            <div class="most-popular-posts">
+                <% for( let post of popular ) { %>
+                    <%- include('./components/postCard.html', {post}) %>
+                <% } %>
+            </div>
+        </div>
+        <div class="latest-posts-container">
+            <h3>Latest Articles</h3>
+            <div class="latest-posts">
+                <% for( let post of latest ) { %>
+                    <%- include('./components/postCard.html', {post}) %>
+                <% } %>
+            </div>
+        </div>
+    </main>
 
     <footer>
         <%- include('./components/footer.html') %>

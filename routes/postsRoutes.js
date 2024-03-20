@@ -81,7 +81,7 @@ postsRouter.get('/posts', async(req, res, next) =>{
           }
         }
         
-        const posts = await Post.find(query);
+        const posts = await Post.find(query).sort({postedDate: -1});
         //console.log(posts)
         res.render('posts', {posts: posts, failed: false, loggedIn: req.cookies.login});
     } catch (error) {
@@ -89,6 +89,7 @@ postsRouter.get('/posts', async(req, res, next) =>{
         res.render('posts', {failed: true, loggedIn: req.cookies.login})
     }
 });
+
 
 // Get a specific post page
 postsRouter.get('/post/:id', async (req, res, next) =>{

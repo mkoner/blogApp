@@ -13,13 +13,8 @@
             gap: 10px;
         }
 
-        .posts-page{
-            text-align: center;
-            margin: 5px 10%;
-        }
-
         .search-posts{
-            padding:50px 50px 30px;
+            padding:10px 10px;
             border-radius:16px;
             box-shadow: 3px 5px 4px #4C5A65;
             margin: 10px 0;
@@ -27,11 +22,11 @@
             justify-content: center;
         }
 
-        @media only screen and (max-width: 750px) {
-            .posts-page {
-                margin: 1%;
-            }
+        .search-posts button{
+            margin: 0;
+            padding: 8px;
         }
+
     </style>
     
 </head>
@@ -40,7 +35,7 @@
     <header>
         <%- include('./components/header.html', {loggedIn: loggedIn}) %>
     </header>
-     <div class="posts-page">
+     <div class="posts-page main-container">
         <% if (failed) { %>
             <div>
                 Something went wrong!
