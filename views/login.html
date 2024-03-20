@@ -36,22 +36,26 @@
     <div class="mainFrame">
        
             <%- include('./components/header.html', {loggedIn: loggedIn}) %>
-     
-        <hr>
 
         <div class="loginBody">
             <form action="/login" method="post">
 
                 <h3>LOGIN</h3>
-
-                <label>email:</label>
-                <input type="email" name="email" id="email">
-                <br><br>
-
-                <label>password:</label>
-                <input type="password" name="password" id="password">
-                <br><br>
-
+                <% if (failed) { %>
+                    <div id="loginFailed" class="error-message">
+                        <label>Login failed - Please try again</label>
+                    </div>
+                    <hr>
+                <% } %>
+        
+                <div class="form-element">
+                    <label>email:</label>
+                    <input type="email" name="email" id="email" required>
+                </div>
+                <div class="form-element">
+                    <label>password:</label>
+                    <input type="password" name="password" id="password" required>
+                </div>    
                 <button type="submit">Login</button>
             </form>
             <div>

@@ -14,25 +14,31 @@
         <!-- <header> -->
             <%- include('./components/header.html', {loggedIn: loggedIn}) %>
 
-        <form action="/registration" method="post">
+            <form action="/registration" method="post">
 
-            <h3>REGISTRATION</h3>
-
-            <label>email:</label>
-            <input type="email" name="email" id="email">
-            <br><br>
-
-
-            <label>password:</label>
-            <input type="password" name="password" id="password">
-            <br><br>
-
-            <label>username:</label>
-            <input type="text" name="username" id="username">
-            <br><br>
-
-            <button type="submit">Register</button>
-        </form>
+                <h3>CREATE AN ACCOUNT</h3>
+    
+                <% if (emailUsed) { %>
+                    <div id="loginFailed" class="error-message" %>>
+                        <label>Registration failed - Email already used.</label>
+                    </div>
+                    <hr>
+                <% } %>
+        
+                <div class="form-element">
+                    <label>Name*:</label>
+                    <input type="text" name="username" id="username" required placeholder="Enter your full name">
+                </div>
+                <div class="form-element">
+                    <label>Email*:</label>
+                    <input type="email" name="email" id="email" required>
+                </div>
+                <div class="form-element">
+                    <label>Password*:</label>
+                    <input type="password" name="password" id="password" required>
+                </div>
+                <button type="submit">Register</button>
+            </form>
 
         <div id="loginFailed" class=<%=emailUsed ? "" : "noDisplay" %>>
             <hr>

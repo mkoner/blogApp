@@ -35,15 +35,16 @@ header{
 
 
 .mainFrame {
-    width: 80%;
+    width: 100%;
     left: 10%;
     /* background-color: rgb(255, 249, 228); */
     /* border: 5px solid green; */
 
     display:flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    min-height: 100vh;
      
 }
 

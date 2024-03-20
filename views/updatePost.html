@@ -16,23 +16,22 @@
 
         <form action="<%= `/posts/update/${post._id}` %>" method="post">
             <h3>Update post</h3>
+            <% if (failed) { %>
+                <div class="error-message" %>>
+                    Error updating post, please try again
+                </div>
+                <hr>
+            <% } %>
             <div>
                 <label for="title">Title</label>
-                <input type="text" name="title" id="title" value=" <%= post.title %> ">
+                <input type="text" name="title" id="title" value=" <%= post.title %> required">
             </div>
             <div>
                 <label for="content">content</label><br>
-                <textarea name="content" id="content" cols="30" rows="10"><%= post.content %></textarea>
+                <textarea name="content" id="content" cols="30" rows="10" required><%= post.content %></textarea>
             </div>
             <button>Update Post</button>
         </form>
-        <div class=<%=failed ? "" : "noDisplay" %>>
-            <hr>
-            <p>
-                Error updating post, please try again
-            </p>
-        </div>
-
 
         <!-- <footer> -->
             <%- include('./components/footer.html') %>
