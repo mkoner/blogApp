@@ -27,18 +27,24 @@
     <hr>
 
     <div>
+        <% if (failed) { %>
+            <div id="loginFailed" class="error-message">
+                <label>Login failed - Please try again</label>
+                <hr>
+            </div>
+        <% } %>
         <form action="/login" method="post">
 
             <h3>LOGIN</h3>
     
-            <label>email:</label>
-            <input type="email" name="email" id="email">
-            <br><br>
-    
-            <label>password:</label>
-            <input type="password" name="password" id="password">
-            <br><br>
-    
+            <div class="form-element">
+                <label>email:</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+            <div class="form-element">
+                <label>password:</label>
+                <input type="password" name="password" id="password" required>
+            </div>    
             <button type="submit">Login</button>
         </form>
         <div>
@@ -46,10 +52,6 @@
         </div>
     </div>
 
-    <div id="loginFailed" class= <%= failed ? "" : "noDisplay" %>>
-        <hr>
-        <label>Login failed - Please try again</label>
-    </div>
     <footer>
         <%- include('./components/footer.html') %>
     </footer>

@@ -35,7 +35,8 @@ usersRouter.get('/login', function (req, res, next) {
 
 usersRouter.post('/login', async function (req, res, next) {
     // #erneute formularbestätigung
-    const {email, password} = req.body;
+    const email = req.body.email.trim();
+    const {password} = req.body;
     const user = await User.findOne({email});
     if(user && bcrypt.compareSync(password, user.password)){
         //## same for register
@@ -74,7 +75,9 @@ usersRouter.get('/registration', function (req, res, next) {
 
 usersRouter.post('/registration', async function (req, res, next) {
     // #erneute formularbestätigung
-    const {username, email, password} = req.body;
+    const { password} = req.body;
+    const email = req.body.email.trim();
+    const username = req.body.username.trim();
     // Encrypt user password
     const hash = bcrypt.hashSync(password, saltRounds);
     const newUser = new User({
@@ -83,7 +86,6 @@ usersRouter.post('/registration', async function (req, res, next) {
         password: hash,
     });
     let emailUsed = false;
-
     try {
         const user = await newUser.save();
         console.log("User created successfully! ");
@@ -140,9 +142,9 @@ usersRouter.post('/users/update/:id', async(req, res, next)=>{
     const newUser = {};
     for(let prop in req.body){
         if(req.body[prop]) 
-          newUser[prop] = req.body[prop];
+          newUser[prop] = prop=="password"? req.body[prop] : req.body[prop].trim();
     }
-    //console.log(newUser);
+    console.log(newUser);
     try {
         await User.findByIdAndUpdate(filter, newUser);
         res.redirect('back');

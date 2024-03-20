@@ -69,6 +69,14 @@
         table, th, td {
             border: 1px solid;
         }
+        .register,
+        .register:link,
+        .register:visited,
+        .register:hover,
+        .register:active{
+            color: blue;
+            padding: 7px;
+        }
     </style>
 </head>
 <body>
@@ -134,7 +142,7 @@
             <% } else {%>
                 <div>
                     You have not posted anything yet <br>
-                    Write your <a href="/posts/new">first post</a>
+                    Write your <a href="/posts/new" class="register">first post</a>
                 </div>
             <% } %>
             <div id="pop-up">
