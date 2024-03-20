@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-<<<<<<< Updated upstream
     <header>
         <%- include('./components/header.html', {loggedIn: loggedIn}) %>
     </header>
@@ -17,38 +16,6 @@
         <div>
             <label for="title">Title</label>
             <input type="text" name="title" id="title">
-=======
-
-    <div class="mainFrame flexColumn">
-
-        <header>
-            <%- include('./components/header.html', {loggedIn: loggedIn}) %>
-        </header>
-
-
-
-        <form action="/posts/new" method="post" enctype="multipart/form-data">
-            <h3>Create a new post</h3>
-            <div>
-                <label for="title">Title</label>
-                <input type="text" name="title" id="title">
-            </div>
-            <div>
-                <label for="content">Content</label><br>
-                <textarea name="content" id="content" cols="30" rows="10"></textarea>
-            </div>
-            <div>
-                <label for="image">Image</label>
-                <input type="file" name="file" id="image">
-            </div>
-            <button>Post</button>
-        </form>
-        <div class=<%=failed ? "" : "noDisplay" %>>
-            <hr>
-            <p>
-                Error creating post, please try again
-            </p>
->>>>>>> Stashed changes
         </div>
         <div>
             <label for="content">content</label><br>
