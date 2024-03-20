@@ -7,6 +7,7 @@ const postSchema = new mongoose.Schema({
     title: { type: String, required: true },
     content: { type: String, required: true },
     imageUrl: {type: String, required: false},
+    views: {type: Number, default: 0},
 });
 
 const Post = mongoose.model("Post", postSchema);

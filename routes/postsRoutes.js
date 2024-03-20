@@ -96,6 +96,8 @@ postsRouter.get('/post/:id', async (req, res, next) =>{
   //console.log(id);
   const post = await Post.findById(id);
   const author = await User.findById(post.ownerId);
+  const views = post.views;
+  await Post.findByIdAndUpdate(id, {views: views+1});
   //console.log(author)
   res.render('postPage', {post: post, author: author, loggedIn: req.cookies.login});
 });

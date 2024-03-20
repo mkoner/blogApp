@@ -28,11 +28,10 @@
         
 .textDiv {
     
-    min-width: 100px;
     display: flex;
     padding: 5%;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     gap: 10px
 }
 
@@ -43,6 +42,16 @@
    -webkit-line-clamp: 3; /* number of lines to show */
            line-clamp: 2;
    -webkit-box-orient: vertical;
+}
+
+.views-and-date{
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+}
+
+.views-and-date-container{
+    justify-self: flex-end;
 }
 
 
@@ -77,14 +86,22 @@
                 <%= post.postedDate %>
             </div> -->
 
-            <div id="Title" class="titleArticle"><strong>
+            <div id="Title" class="titleArticle">
+                <h4>
                     <%= post.title.toUpperCase() %>
-                </strong></div>
-
-            <div id="contentContainer" class="contentContainer">
+                </h4>
 
                 <div id="content" class="textArticle truncate">
                     <%= post.content %>
+                </div>
+            </div>
+
+            
+            <div class="views-and-date-container">
+                <hr>
+                <div class="views-and-date">
+                    <span class="num-of-views"> <%= post.views %> views</span>
+                    <span> <%= post.postedDate.toLocaleString() %> </span>
                 </div>
             </div>
 
