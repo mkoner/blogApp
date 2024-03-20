@@ -4,6 +4,7 @@ body{
     width: 100%;
 }
 
+
 .main-container{
     text-align: center;
     margin: 5px 10%;
@@ -19,6 +20,13 @@ body{
     }
 }
 
+
+.mainFrame {
+    width: 80%;
+
+    display: flex;
+    justify-content: center;
+}
 
 .noDisplay {
     display: none;
