@@ -6,21 +6,107 @@
     <title>header</title>
     <link rel="stylesheet" href="/css/main.css">
 
+    <style>
+
+        .SITE_HEADER_WRAPPER {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            background: white;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            margin-bottom: 20px;
+            z-index: 1000;
+            box-shadow: grey 0 0 10px 0;
+            max-height: 80px;
+        }
+
+        .SITE_HEADER {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .hero-option {
+            padding: 10px;
+            margin: 0 10px;
+            border-bottom: 1px solid transparent;
+            color: rgba(0, 0, 0, 0.97);
+        }
+
+
+        .hero-option:hover {
+            border-bottom: 1px solid black;
+            cursor: pointer;
+        }
+
+        .nav-element {
+            text-decoration: none;
+            color: black;
+        }
+
+        .auth {
+            background: rgba(217, 18, 18, 0.89);
+            padding: 10px;
+            box-shadow: 0 0 10px 0;
+            color: white;
+        }
+
+        .logo-container {
+            height: 80px;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        #logo {
+            height: 60%;
+            width: auto;
+        }
+
+    </style>
 </head>
 
 <body>
-    <nav id="header">
-        <a href="/" class="nav-element">Home</a>
-        <a href="/posts" class="nav-element">Posts</a>
-        <a href="/posts/new" class="nav-element"> Write</a>
+<header class="SITE_HEADER_WRAPPER" id="SITE_HEADER_WRAPPER">
 
-        <!-- Login / Logout -->
-        <% if (loggedIn) { %>
-            <a href="/profile" class="nav-element">Profile</a>
-            <a href="/logout" class="nav-element">Logout</a>
-        <% } else { %>
-            <a href="/login" class="nav-element">Login</a>
-        <% } %>
+    <div class="logo-container">
+        <img id="logo" src="/icons/logo.png" alt="logo">
+    </div>
+
+    <nav id="header">
+        <div class="SITE_HEADER">
+
+            <div class="hero-option">
+                <h4><a href="/" class="nav-element">Home</a></h4>
+            </div>
+            <div class="hero-option">
+                <h4><a href="/posts" class="nav-element">Posts</a></h4>
+            </div>
+            <div class="hero-option">
+                <h4><a href="/posts/new" class="nav-element"> Write</a></h4>
+            </div>
+            <% if (loggedIn) { %>
+            <div class="hero-option">
+                <h4><a href="/profile" class="nav-element">Profile</a></h4>
+            </div>
+            <div class="hero-option">
+                <h4><a href="/logout" class="nav-element, auth">Logout</a></h4>
+            </div>
+            <% } else { %>
+            <div class="hero-option">
+                <h4><a href="/login" class="nav-element, auth">Login</a></h4>
+            </div>
+            <% } %>
+
+        </div>
     </nav>
+
+</header>
 </body>
 </html>

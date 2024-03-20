@@ -69,7 +69,7 @@ postsRouter.get('/posts', async(req, res, next) =>{
     //console.log(req.query);
     try {
         // To do later filter by title or by content contains: done
-        const key = req.query.searchQuery;;
+        const key = req.query.searchQuery;
         let query = {};
         if (key){
           query = {
