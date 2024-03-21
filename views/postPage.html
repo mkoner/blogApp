@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    
+
     <style>
         .post-page {
             margin: 20px 10%;
@@ -32,7 +32,13 @@
 
         .post-page-top {
             display: flex;
-            justify-content: start;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .post-page-top-left, .likes{
+            display: flex;
+            justify-content: flex-start;
             gap: 10px;
             align-items: center;
         }
@@ -52,7 +58,27 @@
                 padding: 5%;
             }
         }
+        #not-liked-icon-container{
+            color: #000;
+            cursor: pointer;
+        }
+        #liked-icon-container{
+            color: #E84A43;
+            cursor: pointer;
+        }
+
+        #like-icon{
+            width: 20px;
+            cursor: pointer;
+            /* filter: opacity(0.5) drop-shadow(0 0 0 #E84A43); */
+            color: #E84A43;
+        }
     </style>
+    <script>
+        function like(id){
+            window.location.href = `/posts/like/${id}`
+        }
+    </script>
 </head>
 
 <body>
@@ -63,15 +89,35 @@
 
             <div class="post-page">
                 <div class="post-page-top">
-                    <div class="user-icon">
-                        <img src="/icons/profile-user.png" alt="user icon" class="icon-image">
+                    <div class="post-page-top-left">
+                        <div class="user-icon">
+                            <img src="/icons/profile-user.png" alt="user icon" class="icon-image">
+                        </div>
+                        <div class="username">
+                            <%= author.username %>
+                        </div>
+                        <span>-</span>
+                        <div class="posted-date">
+                            <%= post.postedDate.toLocaleDateString() %>
+                        </div>
                     </div>
-                    <div class="username">
-                        <%= author.username %>
-                    </div>
-                    <span>-</span>
-                    <div class="posted-date">
-                        <%= post.postedDate.toLocaleDateString() %>
+                    <div class="likes">
+                        <span> <%= post.likes %>  </span>
+                        <% if (liked) { %>
+                            <div id="liked-icon-container" onclick="like('<%= post._id %>')" >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16" id="#like-icon">
+                                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+                                </svg>
+                                <!-- <img src="/icons/like.png" alt="like icon" id="like-icon" onclick="like('<%= post._id %>')"> -->
+                            </div>
+                        <% } else {%>
+                            <div id="not-liked-icon-container" onclick="like('<%= post._id %>')" >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16" id="#like-icon">
+                                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+                                </svg>
+                                <!-- <img src="/icons/like.png" alt="like icon" id="like-icon" onclick="like('<%= post._id %>')"> -->
+                            </div>
+                        <% } %>
                     </div>
                 </div>
                 <h4>

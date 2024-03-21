@@ -7,13 +7,11 @@ const multer = require('multer');
 const Post = require("../models/post");
 const User = require("../models/user");
 
-
-// Specify the folder where to upload files and filename (for adding an image to a new post)
+// Specify the folder where to upload files and filename
 const storage = multer.diskStorage({
     destination: function(req, file, callback) {
       callback(null, path.join(__dirname,'..', 'views', 'uploads'));
     },
-
     filename: function (req, file, callback) {
         const ext = file.originalname.split('.').pop();
         const date = new Date();
@@ -23,8 +21,6 @@ const storage = multer.diskStorage({
 
   const upload = multer({ 
     storage: storage,
-
-    // Check if chosen file is a valid image:
     fileFilter: (req, file, cb) => {
         if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
           cb(null, true);
@@ -35,23 +31,16 @@ const storage = multer.diskStorage({
       }
  });
 
-
-// CREATE NEW POST
-
-// 1) Login-check:
 postsRouter.get('/posts/new', (req, res, next) =>{
     const isLoggedIn = req.cookies.login;
-
-    
     if(isLoggedIn)
       res.render('createPost', {failed: false, loggedIn: req.cookies.login, notImage: false});
     else
       res.render('login',{failed:false, loggedIn: req.cookies.login});
 });
 
-// 2) Post-submission:
 postsRouter.post('/posts/new', upload.single('file'), async (req, res, next) =>{
-    
+    //console.log("file: ", req.file)
       const imageUrl = req.file.filename;
       const ownerId = req.cookies.login;
       const newPost = new Post({
@@ -75,16 +64,14 @@ postsRouter.post('/posts/new', upload.single('file'), async (req, res, next) =>{
 });
 
 
-// Get all the posts, search by title or content
+// Get all the posts, filter by title or content
 postsRouter.get('/posts', async(req, res, next) =>{
-    
+    //console.log(req.query);
     try {
-       
+        // To do later filter by title or by content contains: done
         const key = req.query.searchQuery;
         let query = {};
-        // check if user entered a search term:
         if (key){
-          // check if search term is in title or in content of article:
           query = {
             "$or": [{
               "title": { '$regex': '.*' + key + '.*', $options: 'i' }
@@ -95,24 +82,28 @@ postsRouter.get('/posts', async(req, res, next) =>{
         }
         
         const posts = await Post.find(query).sort({postedDate: -1});
-      
+        //console.log(posts)
         res.render('posts', {posts: posts, failed: false, loggedIn: req.cookies.login});
     } catch (error) {
+        //res.status(500).json({ error: error.message });
         res.render('posts', {failed: true, loggedIn: req.cookies.login})
     }
 });
 
 
-// Get specific post page
+// Get a specific post page
 postsRouter.get('/post/:id', async (req, res, next) =>{
   const {id} = req.params;
-  
+  //console.log(id);
   const post = await Post.findById(id);
   const author = await User.findById(post.ownerId);
   const views = post.views;
   await Post.findByIdAndUpdate(id, {views: views+1});
- 
-  res.render('postPage', {post: post, author: author, loggedIn: req.cookies.login});
+  //console.log(author)
+  const likedPostsCookie = req.cookies.likedPosts;
+  const likedPosts = likedPostsCookie ? JSON.parse(likedPostsCookie) : [];
+  const liked = likedPosts.includes(id);
+  res.render('postPage', {post: post, author: author, loggedIn: req.cookies.login, liked: liked});
 });
 
 postsRouter.get('/posts/update/:id', async(req, res, next) => {
@@ -120,23 +111,26 @@ postsRouter.get('/posts/update/:id', async(req, res, next) => {
   if(req.cookies.login){
     const {id} = req.params;
     const post = await Post.findById(id);
-   
+    //console.log(post)
     res.render('updatePost', {post: post, failed: false, loggedIn: req.cookies.login});
   } else 
     res.render('login',{failed:false, loggedIn: req.cookies.login});
 });
 
 
-// UPDATE POST
+// Route to update a post
 postsRouter.post('/posts/update/:id',  async (req, res, next) =>{
 
+  // console.log("update post")
+  // console.log(req.body);
+  // console.log(req.params.id);
   const filter = {_id: req.params.id};
   const newPost = {};
   for(let prop in req.body){
       if(req.body[prop]) 
         newPost[prop] = req.body[prop].trim();
   }
-
+  //console.log(newPost);
   try {
       await Post.findByIdAndUpdate(filter, newPost);
       res.redirect('back');
@@ -146,7 +140,7 @@ postsRouter.post('/posts/update/:id',  async (req, res, next) =>{
 
 });
 
-// DELETE POST
+// Route to delete a post
 postsRouter.get('/posts/delete/:id',  async (req, res, next) =>{
 
   const {id} = req.params;
@@ -161,7 +155,45 @@ postsRouter.get('/posts/delete/:id',  async (req, res, next) =>{
 
 });
 
+// Like a post
+postsRouter.get('/posts/like/:id', async(req, res, next) => {
+  console.log("like a post")
+    const {id} = req.params;
+    const post = await Post.findById(id);
+    const author = await User.findById(post.ownerId);
+    const likes = post.likes;
+    const likedPostsCookie = req.cookies.likedPosts;
+    const likedPosts = likedPostsCookie ? JSON.parse(likedPostsCookie) : [];
+    const liked = likedPosts.includes(id);
+    if(liked){
+      const index = likedPosts.indexOf(id)
+      likedPosts.splice(index, 1);
+      await Post.findByIdAndUpdate(id, {likes: likes-1});
+    }
+    else{
+      likedPosts.push(id);
+      await Post.findByIdAndUpdate(id, {likes: likes+1});
+    }
+    
+    res.cookie('likedPosts', JSON.stringify(likedPosts));
+    res.redirect('back');
+});
 
+// Unlike a post
+postsRouter.get('/posts/unlike/:id', async(req, res, next) => {
+  console.log("unlike post")
+  const {id} = req.params;
+  const post = await Post.findById(id);
+  const author = await User.findById(post.ownerId);
+  const likes = post.likes;
+  const likedPostsCookie = req.cookies.likedPosts;
+  const likedPosts = likedPostsCookie ? JSON.parse(likedPostsCookie) : [];
+  const index = likedPosts.indexOf(id)
+  likedPosts.splice(0, index, 1);
+  await Post.findByIdAndUpdate(id, {likes: likes-1});
+  res.cookie('likedPosts', JSON.stringify(likedPosts));
+  res.render('postPage', {post: post, author: author, loggedIn: req.cookies.login});
+});
 
 module.exports = postsRouter;
  
