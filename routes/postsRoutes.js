@@ -8,7 +8,7 @@ const Post = require("../models/post");
 const User = require("../models/user");
 
 
-// Specify the folder where to upload files and filename
+// Specify the folder where to upload files and filename (for adding an image to a new post)
 const storage = multer.diskStorage({
     destination: function(req, file, callback) {
       callback(null, path.join(__dirname,'..', 'views', 'uploads'));
