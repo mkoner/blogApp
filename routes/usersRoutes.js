@@ -12,8 +12,7 @@ const usersRouter = express.Router(options);
 const User = require("../models/user");
 const Post = require("../models/post");
 
-// USER STORAGE
-//let users = [{email: 's@d', password: 's'}];
+
 
 // for bCrypt
 const saltRounds = 7;
@@ -125,7 +124,7 @@ usersRouter.post('/users/update/:id', async (req, res, next) => {
     } catch (error) {
         const user = await User.findById(req.cookies.login);
         const posts = await Post.find({ ownerId: user._id });
-        
+
         if (error.codeName == 'DuplicateKey')
             res.render('profile', { user: user, posts: posts, accountError: "This email already exists", loggedIn: req.cookies.login, postError: false });
         else
