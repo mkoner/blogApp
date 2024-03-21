@@ -60,8 +60,9 @@ usersRouter.get('/registration', function (req, res, next) {
 usersRouter.post('/registration', async function (req, res, next) {
 
     const { password } = req.body;
-    const email = req.body.email.trim();
+    const email = req.body.email.toLowerCase().trim();
     const username = req.body.username.trim();
+
     // Encrypt user password
     const hash = bcrypt.hashSync(password, saltRounds);
     const newUser = new User({
@@ -70,6 +71,7 @@ usersRouter.post('/registration', async function (req, res, next) {
         password: hash,
     });
     let emailUsed = false;
+
     try {
         const user = await newUser.save();
         console.log("User created successfully! ");

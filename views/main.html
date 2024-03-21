@@ -63,7 +63,7 @@
         </div>
         <main class="home-page main-container">
             <div class="most-popular-posts-container" id="most-popular-posts-container">
-                <h3>Popular Articles</h3>
+                <h3 class="section-title">Popular Articles</h3>
                 <div class="most-popular-posts">
                     <% for( let post of popular ) { %>
                         <%- include('./components/postCard.html', {post}) %>
@@ -71,7 +71,7 @@
                 </div>
             </div>
             <div class="latest-posts-container" id="latest-posts-container">
-                <h3>Recent Articles</h3>
+                <h3 class="section-title">Recent Articles</h3>
                 <div class="latest-posts">
                     <% for( let post of latest ) { %>
                         <%- include('./components/postCard.html', {post}) %>

@@ -129,3 +129,13 @@ a:active {
 .error-message{
     color: red;
 }
+
+
+.section-title{
+    margin-top: 70px;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: white;
+    background-color: rgba(255, 0, 0, 0.84);
+    padding: 10px;
+}
