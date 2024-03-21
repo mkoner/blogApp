@@ -98,24 +98,24 @@
     <nav id="header">
         <div class="SITE_HEADER">
 
-            <div class="hero-option">
+            <div class="hero-option" onclick="window.location='/'">
                 <h4><a href="/" class="nav-element">Home</a></h4>
             </div>
-            <div class="hero-option">
+            <div class="hero-option" onclick="window.location='/posts'">
                 <h4><a href="/posts" class="nav-element">Posts</a></h4>
             </div>
-            <div class="hero-option">
+            <div class="hero-option" onclick="window.location='/posts/new'">
                 <h4><a href="/posts/new" class="nav-element"> Write</a></h4>
             </div>
             <% if (loggedIn) { %>
-            <div class="hero-option">
+            <div class="hero-option" onclick="window.location='/profile'">
                 <h4><a href="/profile" class="nav-element">Profile</a></h4>
             </div>
-            <div class="hero-option">
+            <div class="hero-option" onclick="window.location='/logout'">
                 <h4><a href="/logout" class="nav-element, auth">Logout</a></h4>
             </div>
             <% } else { %>
-            <div class="hero-option">
+            <div class="hero-option" onclick="window.location='/login'">
                 <h4><a href="/login" class="nav-element, auth">Login</a></h4>
             </div>
             <% } %>

@@ -31,7 +31,7 @@ usersRouter.get('/', async function(req,res,next){
 // LOGIN
 usersRouter.get('/login', function (req, res, next) {
     if(req.cookies.login)
-      res.redirect('back');
+      res.redirect('/');
     else
       res.render('login',{failed:false, loggedIn: req.cookies.login});
 });
