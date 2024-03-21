@@ -100,7 +100,10 @@ postsRouter.get('/post/:id', async (req, res, next) =>{
   const views = post.views;
   await Post.findByIdAndUpdate(id, {views: views+1});
   //console.log(author)
-  res.render('postPage', {post: post, author: author, loggedIn: req.cookies.login});
+  const likedPostsCookie = req.cookies.likedPosts;
+  const likedPosts = likedPostsCookie ? JSON.parse(likedPostsCookie) : [];
+  const liked = likedPosts.includes(id);
+  res.render('postPage', {post: post, author: author, loggedIn: req.cookies.login, liked: liked});
 });
 
 postsRouter.get('/posts/update/:id', async(req, res, next) => {
@@ -150,6 +153,46 @@ postsRouter.get('/posts/delete/:id',  async (req, res, next) =>{
     res.render('profile', {user: user, posts: posts, accountError: false, loggedIn: req.cookies.login, postError: "Error deleting post"});
   }  
 
+});
+
+// Like a post
+postsRouter.get('/posts/like/:id', async(req, res, next) => {
+  console.log("like a post")
+    const {id} = req.params;
+    const post = await Post.findById(id);
+    const author = await User.findById(post.ownerId);
+    const likes = post.likes;
+    const likedPostsCookie = req.cookies.likedPosts;
+    const likedPosts = likedPostsCookie ? JSON.parse(likedPostsCookie) : [];
+    const liked = likedPosts.includes(id);
+    if(liked){
+      const index = likedPosts.indexOf(id)
+      likedPosts.splice(index, 1);
+      await Post.findByIdAndUpdate(id, {likes: likes-1});
+    }
+    else{
+      likedPosts.push(id);
+      await Post.findByIdAndUpdate(id, {likes: likes+1});
+    }
+    
+    res.cookie('likedPosts', JSON.stringify(likedPosts));
+    res.redirect('back');
+});
+
+// Unlike a post
+postsRouter.get('/posts/unlike/:id', async(req, res, next) => {
+  console.log("unlike post")
+  const {id} = req.params;
+  const post = await Post.findById(id);
+  const author = await User.findById(post.ownerId);
+  const likes = post.likes;
+  const likedPostsCookie = req.cookies.likedPosts;
+  const likedPosts = likedPostsCookie ? JSON.parse(likedPostsCookie) : [];
+  const index = likedPosts.indexOf(id)
+  likedPosts.splice(0, index, 1);
+  await Post.findByIdAndUpdate(id, {likes: likes-1});
+  res.cookie('likedPosts', JSON.stringify(likedPosts));
+  res.render('postPage', {post: post, author: author, loggedIn: req.cookies.login});
 });
 
 module.exports = postsRouter;
